@@ -27,7 +27,8 @@ def add_user():
             db.session.commit()
 
             response = {
-                'message': 'User {} was created'.format(new_user.firstname)
+                'message': 'User {} was created'.format(new_user.firstname),
+                'id': new_user.id
                 }
             return jsonify(response)
     except Exception as e:
@@ -88,7 +89,9 @@ def show_user(user_id):
 @user.route("/delete", methods=["POST"])
 def remove_user():
     try:
-        user_id = request.form.get("id")
+        form = json.loads(request.data)
+        user_id = form['id']
+
         user = User.query.filter_by(id=user_id).first()
         db.session.delete(user)
         db.session.commit()
