@@ -12,9 +12,9 @@ def add_user():
     print('Register: ' + str(form))
     firstname = form['firstname']
     lastname = form['lastname']
-    email = form['email']
+    email = form['email'].lower()
     age = form['age']
-    gender = form['gender']
+    gender = form['gender'].lower()
 
     try:
         if User.query.filter_by(email=email).first():
@@ -59,7 +59,7 @@ def list_user():
 
         if age_start:
             q = q.filter(User.age >= age_start).filter(User.age <= age_end)
-        else:
+        elif age:
             q = q.filter_by(age=age)
 
         if gender:
@@ -69,6 +69,8 @@ def list_user():
         return jsonify(User.to_serializable_list(data))
     except Exception as e:
         print(e)
+        message = {'message': 'Something went wrong'}
+        return jsonify(message), 500
 
 
 @user.route('/users/<user_id>', methods=['GET'])
@@ -79,6 +81,8 @@ def show_user(user_id):
         return jsonify(data.to_serializable_dict())
     except Exception as e:
         print(e)
+        message = {'message': 'Cannot get user ID {}'.format(user_id)}
+        return jsonify(message), 500
 
 
 @user.route("/delete", methods=["POST"])
@@ -91,5 +95,7 @@ def remove_user():
     except Exception as e:
         print('Cannot remove user iD {}'.format(user_id))
         print(e)
+        message = {'message': 'Cannot remove user ID {}'.format(user_id)}
+        return jsonify(message), 500
 
     return redirect("/users")
