@@ -1,13 +1,30 @@
 <template>
   <div>
     <div class="container">
-      <div class="search_box">
-      </div>
-      <div class="new_user">
-        <b-btn v-b-modal.new_user_modal size="sm" class="float-right">
-          New User
-        </b-btn>
-      </div>
+      <h2>Users List</h2>
+      <b-row>
+        <b-col sm=2>
+          <div class="new_user">
+            <b-btn v-b-modal.new_user_modal size="sm" class="float-left">
+              New User
+            </b-btn>
+          </div>
+        </b-col>
+        <b-col>
+          <div class="search_box">
+            <mdb-container>
+              <div class="active-cyan-3 active-cyan-4 mb-3">
+                <input 
+                  v-model="search_term"
+                  class="form-control" 
+                  type="text"
+                  placeholder="Search"
+                  aria-label="Search"/>
+              </div>
+            </mdb-container>
+          </div>
+        </b-col>
+      </b-row>
       <b-table show-empty striped hover
              :sort-by.sync="sortBy"
              :sort-desc.sync="sortDesc"
@@ -123,6 +140,7 @@ export default {
 
   data() {
     return {
+      search_term: '',
       user1: {
         firstname: '',
         lastname: '',
@@ -150,8 +168,15 @@ export default {
     ])
   },
 
+  watch: {
+    search_term: function (newSelection, oldSelection) {
+      this.$store.dispatch('getUsers', this.search_term);
+    }
+  },
+
   methods: {
     ...mapActions([
+      'getUsers',
       'getCurrentUser',
       'addUser',
       'removeUser'
