@@ -96,8 +96,12 @@
             <b-col sm="3"><label for="gender">Gender</label></b-col>
             <b-col sm="9">
               <b-form-group>
-                <b-form-radio v-model="user1.gender" name="male" value="male">Male</b-form-radio>
-                <b-form-radio v-model="user1.gender" name="female" value="female">Female</b-form-radio>
+                <b-form-radio-group
+                  id="gender-group"
+                  v-model="user1.gender"
+                  :options="genders"
+                  name="gender-options"
+                  ></b-form-radio-group>
               </b-form-group>
             </b-col>
           </b-row>
@@ -157,7 +161,11 @@ export default {
         { key: 'age', sortable: true },
         { key: 'gender', label: 'Gender', sortable: true },
         { key: 'actions', label: 'Action' }
-      ]
+      ],
+      genders: [
+          { text: 'Male', value: 'male' },
+          { text: 'Female', value: 'female' }
+        ]
     }
   },
 
