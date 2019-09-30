@@ -1,5 +1,6 @@
 import json
 from flask import redirect, render_template, request, jsonify
+from sqlalchemy import or_
 
 from . import user
 from app import db
@@ -40,31 +41,33 @@ def add_user():
 @user.route('/users', methods=['GET'])
 def list_user():
     try:
-        firstname = request.args.get('firstname', default='', type=str)
-        lastname = request.args.get('lastname', default='', type=str)
-        email = request.args.get('email', default='', type=str)
-        age = request.args.get('age', default=0, type=int)
-        age_start = request.args.get('age_start', default=0, type=int)
-        age_end = request.args.get('age_end', default=200, type=int)
-        gender = request.args.get('gender', default='', type=str)
+        search_str = request.args.get('s', default='', type=str)
+        print('Search String: {}'.format(search_str))
  
         q = User.query
-        if firstname:
-            q = q.filter(User.firstname.like('%{}%'.format(firstname)))
 
-        if lastname:
-            q = q.filter(User.lastname.like('%{}%'.format(lastname)))
-
-        if email:
-            q = q.filter(User.email.like('%{}%'.format(email)))
-
-        if age_start:
-            q = q.filter(User.age >= age_start).filter(User.age <= age_end)
-        elif age:
-            q = q.filter_by(age=age)
-
-        if gender:
-            q = q.filter_by(gender=gender.lower())
+        try:
+            (t1, t2) = search_str.split('-', 1)
+        except Exception as e:
+            try:
+                age = int(search_str)
+            except Exception as e:
+                if 'male' == search_str.lower() or 'female' == search_str.lower():
+                    q = q.filter_by(gender=search_str.lower())
+                elif search_str:
+                    q = q.filter(or_(User.firstname.like('%{}%'.format(search_str)), \
+                        User.lastname.like('%{}%'.format(search_str)), \
+                        User.email.like('%{}%'.format(search_str)) \
+                    ))
+            else:
+                if age:
+                    q = q.filter_by(age=age)
+        else:
+            if t1 and t2:
+                age_start = int(t1)
+                age_end = int(t2)
+                if age_start:
+                    q = q.filter(User.age >= age_start).filter(User.age <= age_end)
 
         data = q.all()
         return jsonify(User.to_serializable_list(data))
