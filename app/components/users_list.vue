@@ -37,6 +37,12 @@
           {{ data.item.firstname }} {{ data.item.lastname }}
         </template>
         <template v-slot:cell(actions)="data">
+          <b-btn v-b-modal.edit_user_modal 
+            variant="warning"
+            size="sm" 
+            @click="setUser(data.item)">
+              Edit
+          </b-btn>
           <b-btn v-b-modal.remove_user_modal 
             variant="danger"
             size="sm" 
@@ -99,6 +105,68 @@
                 <b-form-radio-group
                   id="gender-group"
                   v-model="user1.gender"
+                  :options="genders"
+                  name="gender-options"
+                  ></b-form-radio-group>
+              </b-form-group>
+            </b-col>
+          </b-row>
+        </b-container>
+      </b-modal>
+      <b-modal 
+        id="edit_user_modal"
+        title="Modify User"
+        @ok="updateUser"
+        @shown="clearUser">
+        <b-container fluid>
+          <b-row>
+            <b-col sm="3"><label for="firstname">Name</label></b-col>
+            <b-col sm="4">
+              <b-form-input 
+                v-model="current_user.firstname"
+                id="firstname"
+                type="text"
+                placeholder="Firstname">
+              </b-form-input>
+            </b-col>
+            <b-col sm="5">
+              <b-form-input 
+                v-model="current_user.lastname"
+                id="lastname"
+                type="text"
+                placeholder="Lastname">
+              </b-form-input>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3"><label for="email">Email</label></b-col>
+            <b-col sm="9">
+              <b-form-input 
+                v-model="current_user.email"
+                id="email"
+                type="text"
+                placeholder="Email">
+              </b-form-input>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3"><label for="age">Age</label></b-col>
+            <b-col sm="3">
+              <b-form-input 
+                v-model="current_user.age"
+                id="age"
+                type="text"
+                placeholder="Age">
+              </b-form-input>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3"><label for="gender">Gender</label></b-col>
+            <b-col sm="9">
+              <b-form-group>
+                <b-form-radio-group
+                  id="gender-group"
+                  v-model="current_user.gender"
                   :options="genders"
                   name="gender-options"
                   ></b-form-radio-group>
@@ -187,6 +255,7 @@ export default {
       'getUsers',
       'getCurrentUser',
       'addUser',
+      'updateUser',
       'removeUser'
     ]),
 
@@ -200,12 +269,16 @@ export default {
       };
     },
 
+    setUser(user) {
+      this.$store.dispatch('getCurrentUser', user.id);
+    },
+
     newUser(evt) {
       this.$store.dispatch('addUser', this.user1);
     },
 
-    setUser(user) {
-      this.$store.dispatch('getCurrentUser', user.id);
+    updateUser(user) {
+      this.$store.dispatch('updateUser', this.current_user);
     },
 
     deleteUser(evt) {

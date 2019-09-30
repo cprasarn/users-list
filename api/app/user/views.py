@@ -89,6 +89,38 @@ def show_user(user_id):
         return jsonify(message), 500
 
 
+@user.route('/users/<user_id>', methods=['PUT'])
+def update_user(user_id):
+    form = json.loads(request.data)
+    print('Update: ' + str(form))
+    firstname = form['firstname']
+    lastname = form['lastname']
+    email = form['email'].lower()
+    age = int(form['age'])
+    gender = form['gender'].lower()
+
+    try:
+        # Get user by ID
+        data = User.query.filter_by(id=user_id).first()
+        if data.firstname != firstname:
+            data.firstname = firstname
+        if data.lastname != lastname:
+            data.lastname = lastname
+        if data.email != email:
+            data.email = email
+        if data.age != age:
+            data.age = age
+        if data.gender != gender:
+            data.gender = gender
+        db.session.commit()
+
+        return jsonify(data.to_serializable_dict())
+    except Exception as e:
+        print(e)
+        message = {'message': 'Something went wrong'}
+        return jsonify(message), 500
+
+
 @user.route("/delete", methods=["POST"])
 def remove_user():
     try:

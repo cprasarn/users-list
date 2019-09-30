@@ -24,6 +24,18 @@ const actions = {
     user_data.id = data.id
     commit('addUser', user_data)
   },
+  async updateUser({commit, state}, user) {
+    let user_data = {
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      age: user.age,
+      gender: user.gender
+    }
+    let {data} = await this.$axios.put(`/users/${user.id}`, user_data)
+    commit('updateUsers', user_data)
+  },
   async removeUser({commit, state}, user) {
     let {data} = await this.$axios.post(`/delete`, { id: user.id })
     commit('removeUser', user)
