@@ -225,7 +225,7 @@ export default {
 </script>
 
 <style scoped>
-.new_property {
+.new_user {
   padding: 10px 0;
 }
 .grid-container {
