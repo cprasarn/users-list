@@ -163,9 +163,9 @@ export default {
         { key: 'actions', label: 'Action' }
       ],
       genders: [
-          { text: 'Male', value: 'male' },
-          { text: 'Female', value: 'female' }
-        ]
+        { text: 'Male', value: 'male' },
+        { text: 'Female', value: 'female' }
+      ]
     }
   },
 
