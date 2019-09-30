@@ -2,6 +2,11 @@
 
 > Small project saving people names and other information
 
+## How to use the search box
+The search feature allows user to fill in the firstname, lastname, email, 
+age, and gender.  User can put the search terms for age and age range, e.g., 
+24 or 40 - 50.
+
 ## Build Setup
 
 ``` bash
