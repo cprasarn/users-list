@@ -8,7 +8,7 @@ API is written in Python.
 - SQLite
 
 ## Web App
-Web application is a nuxt application.
+Web application is a VueJS application.
 - Nuxt 2.9.2
 - BootstrapVue
 - Vuex
