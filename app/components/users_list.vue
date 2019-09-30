@@ -53,7 +53,7 @@
         <b-container fluid>
           <b-row>
             <b-col sm="3"><label for="firstname">Name</label></b-col>
-            <b-col sm="3">
+            <b-col sm="4">
               <b-form-input 
                 v-model="user1.firstname"
                 id="firstname"
@@ -61,7 +61,7 @@
                 placeholder="Firstname">
               </b-form-input>
             </b-col>
-            <b-col sm="3">
+            <b-col sm="5">
               <b-form-input 
                 v-model="user1.lastname"
                 id="lastname"
@@ -94,13 +94,11 @@
           </b-row>
           <b-row>
             <b-col sm="3"><label for="gender">Gender</label></b-col>
-            <b-col sm="3">
-              <b-form-input 
-                v-model="user1.gender"
-                id="gender"
-                type="text"
-                placeholder="Gender">
-              </b-form-input>
+            <b-col sm="9">
+              <b-form-group>
+                <b-form-radio v-model="user1.gender" name="male" value="male">Male</b-form-radio>
+                <b-form-radio v-model="user1.gender" name="female" value="female">Female</b-form-radio>
+              </b-form-group>
             </b-col>
           </b-row>
         </b-container>
@@ -109,7 +107,9 @@
                title="Confirm Removing User"
                @ok="deleteUser">
         <b-container fluid>
-          <p>By clicking 'OK' button, the following user will be removed from the system.</p>
+          <b-alert show variant="warning">
+            By clicking 'OK' button, the following user will be removed from the system.
+          </b-alert>
           <b-row>
             <b-col sm="3"><label>Name</label></b-col>
             <b-col sm="9"><label>{{ current_user.firstname }} {{ current_user.lastname }}</label></b-col>
