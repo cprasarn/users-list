@@ -52,8 +52,9 @@ def list_user():
             try:
                 age = int(search_str)
             except Exception as e:
-                if 'male' == search_str.lower() or 'female' == search_str.lower():
-                    q = q.filter_by(gender=search_str.lower())
+                gender = search_str.lower()
+                if 'male' == gender or 'female' == gender:
+                    q = q.filter_by(gender=gender)
                 elif search_str:
                     q = q.filter(or_(User.firstname.like('%{}%'.format(search_str)), \
                         User.lastname.like('%{}%'.format(search_str)), \
