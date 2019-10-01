@@ -281,15 +281,6 @@ export default {
 
     deleteUser(evt) {
       this.$store.dispatch('removeUser', this.current_user);
-    },
-
-    showUser(u) {
-      this.$store.dispatch(
-        'getCurrentUser',
-        u.id
-      ).then(() => {
-        this.$router.push({ name: 'users-id', params: { id: u.id } });
-      });
     }
   }
 }
