@@ -121,12 +121,9 @@ def update_user(user_id):
         return jsonify(message), 500
 
 
-@user.route("/delete", methods=["POST"])
-def remove_user():
+@user.route('/users/<user_id>', methods=['DELETE'])
+def remove_user(user_id):
     try:
-        form = json.loads(request.data)
-        user_id = form['id']
-
         user = User.query.filter_by(id=user_id).first()
         db.session.delete(user)
         db.session.commit()
@@ -135,5 +132,6 @@ def remove_user():
         print(e)
         message = {'message': 'Cannot remove user ID {}'.format(user_id)}
         return jsonify(message), 500
-
-    return redirect("/users")
+    else:
+        data = User.query.all()
+        return jsonify(User.to_serializable_list(data))

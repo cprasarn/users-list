@@ -37,8 +37,8 @@ const actions = {
     commit('updateUsers', user_data)
   },
   async removeUser({commit, state}, user) {
-    let {data} = await this.$axios.post(`/delete`, { id: user.id })
-    commit('removeUser', user)
+    let {data} = await this.$axios.delete(`/users/${user.id}`)
+    commit('setUsers', data)
   },
   async nuxtServerInit ({dispatch, commit}, {store, route, params}) {
     await dispatch('getUsers')
