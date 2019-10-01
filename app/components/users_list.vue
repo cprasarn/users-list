@@ -299,18 +299,6 @@ export default {
 .new_user {
   padding: 5px 10px;
 }
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  justify-content: space-between;
-  grid-gap: 10px;
-}
-.flex-container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-content: space-around;
-}
 .header {
   margin: 10px 10px;
 }
