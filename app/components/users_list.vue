@@ -1,30 +1,28 @@
 <template>
   <div>
     <div class="container">
-      <h2>Users List</h2>
-      <b-row>
-        <b-col sm=2>
+      <div class="header">
+        <div class="title">
+          <h2>Users List</h2>
+        </div>
+        <div>
           <div class="new_user">
             <b-btn v-b-modal.new_user_modal size="sm" class="float-left">
               New User
             </b-btn>
           </div>
-        </b-col>
-        <b-col>
-          <div class="search_box">
-            <mdb-container>
-              <div class="active-cyan-3 active-cyan-4 mb-3">
-                <input 
-                  v-model="search_term"
-                  class="form-control" 
-                  type="text"
-                  placeholder="Search"
-                  aria-label="Search"/>
-              </div>
-            </mdb-container>
-          </div>
-        </b-col>
-      </b-row>
+        </div>
+      </div>
+      <div class="search_box">
+        <div class="active-cyan-3 active-cyan-4 mb-3">
+          <input 
+            v-model="search_term"
+            class="form-control" 
+            type="text"
+            placeholder="Search"
+             aria-label="Search"/>
+        </div>
+      </div>
       <b-table show-empty striped hover
              :sort-by.sync="sortBy"
              :sort-desc.sync="sortDesc"
@@ -299,7 +297,7 @@ export default {
 
 <style scoped>
 .new_user {
-  padding: 10px 0;
+  padding: 5px 10px;
 }
 .grid-container {
   display: grid;
@@ -312,5 +310,12 @@ export default {
   flex-flow: row wrap;
   justify-content: space-between;
   align-content: space-around;
+}
+.header {
+  margin: 10px 10px;
+}
+.title {
+  float: left;
+  width: 160px;
 }
 </style>
