@@ -71,11 +71,12 @@ def list_user():
                     q = q.filter(User.age >= age_start).filter(User.age <= age_end)
 
         data = q.all()
-        return jsonify(User.to_serializable_list(data))
     except Exception as e:
         print(e)
         message = {'message': 'Something went wrong'}
         return jsonify(message), 500
+    else:
+        return jsonify(User.to_serializable_list(data)), 200
 
 
 @user.route('/users/<user_id>', methods=['GET'])
@@ -83,11 +84,12 @@ def show_user(user_id):
     try:
         # Get user by ID
         data = User.query.filter_by(id=user_id).first()
-        return jsonify(data.to_serializable_dict())
     except Exception as e:
         print(e)
         message = {'message': 'Cannot get user ID {}'.format(user_id)}
         return jsonify(message), 500
+    else:
+        return jsonify(data.to_serializable_dict()), 200
 
 
 @user.route('/users/<user_id>', methods=['PUT'])
@@ -114,12 +116,12 @@ def update_user(user_id):
         if data.gender != gender:
             data.gender = gender
         db.session.commit()
-
-        return jsonify(data.to_serializable_dict())
     except Exception as e:
         print(e)
         message = {'message': 'Something went wrong'}
         return jsonify(message), 500
+    else:
+        return jsonify(data.to_serializable_dict()), 200
 
 
 @user.route('/users/<user_id>', methods=['DELETE'])
