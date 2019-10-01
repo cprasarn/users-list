@@ -12,29 +12,13 @@ const actions = {
     commit('setCurrentUser', data)
   },
   async addUser({commit, state}, user) {
-    let user_data = {
-      id: '',
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      age: user.age,
-      gender: user.gender
-    }
-    let {data} = await this.$axios.post('/register', user_data)
-    user_data.id = data.id
-    commit('addUser', user_data)
+    let {data} = await this.$axios.post('/register', user)
+    user.id = data.id
+    commit('addUser', user)
   },
   async updateUser({commit, state}, user) {
-    let user_data = {
-      id: user.id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      age: user.age,
-      gender: user.gender
-    }
-    let {data} = await this.$axios.put(`/users/${user.id}`, user_data)
-    commit('updateUsers', user_data)
+    let {data} = await this.$axios.put(`/users/${user.id}`, user)
+    commit('updateUsers', user)
   },
   async removeUser({commit, state}, user) {
     let {data} = await this.$axios.delete(`/users/${user.id}`)
