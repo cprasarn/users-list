@@ -128,10 +128,11 @@ def remove_user(user_id):
         db.session.delete(user)
         db.session.commit()
     except Exception as e:
-        print('Cannot remove user iD {}'.format(user_id))
+        print('Cannot remove user ID {}'.format(user_id))
         print(e)
         message = {'message': 'Cannot remove user ID {}'.format(user_id)}
         return jsonify(message), 500
     else:
-        data = User.query.all()
-        return jsonify(User.to_serializable_list(data))
+        message = {'message': 'User ID {} was removed'.format(user_id)}
+        return jsonify(message), 200
+
