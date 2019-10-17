@@ -48,7 +48,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://local.shodiros.com:8000',
+    baseURL: 'https://dev.shodiros.com:8000',
     https: true
   },
   /*
