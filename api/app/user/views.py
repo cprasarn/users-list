@@ -7,10 +7,11 @@ from app import db
 from app.user.models import User
 
 
-@user.route('/register', methods=['POST'])
+@user.route('/users', methods=['POST'])
 def add_user():
     form = json.loads(request.data)
-    print('Register: ' + str(form))
+    #print('Register: ' + str(form))
+
     firstname = form['firstname']
     lastname = form['lastname']
     email = form['email'].lower()
@@ -42,7 +43,7 @@ def add_user():
 def list_user():
     try:
         search_str = request.args.get('s', default='', type=str)
-        print('Search String: {}'.format(search_str))
+        #print('Search String: {}'.format(search_str))
  
         q = User.query
 
@@ -95,7 +96,8 @@ def show_user(user_id):
 @user.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
     form = json.loads(request.data)
-    print('Update: ' + str(form))
+    #print('Update: ' + str(form))
+
     firstname = form['firstname']
     lastname = form['lastname']
     email = form['email'].lower()

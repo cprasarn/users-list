@@ -1,7 +1,4 @@
 const actions = {
-  async signup({commit, store}, signup) {
-    let {data} = await this.$axios.post('/register', signup)
-  },
   async getUsers({commit, store}, search) {
     let params = { s: search }
     let {data} = await this.$axios.get(`users`, { params: params })
@@ -12,7 +9,7 @@ const actions = {
     commit('setCurrentUser', data)
   },
   async addUser({commit, state}, user) {
-    let {data} = await this.$axios.post('/register', user)
+    let {data} = await this.$axios.post('/users', user)
     user.id = data.id
     commit('addUser', user)
   },
