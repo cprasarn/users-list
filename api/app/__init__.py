@@ -30,16 +30,10 @@ def create_before_request(app):
 
 
 def create_app(config_name):
-    """SQLite"""
-    project_dir = os.path.dirname(os.path.abspath(__file__))
-    database_file = "sqlite:///{}".format(os.path.join(project_dir, "people.db"))
-    #print(database_file)
-
     """Create an application."""
     app = Flask(__name__)
     app.debug = True
     app.config.from_object(config[config_name])
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_file
 
     # User
     from .user import user as user_blueprint
@@ -57,6 +51,12 @@ def create_app(config_name):
 
     # Database
     db.init_app(app)
-    #db.create_all()
+
+    # This does the binding
+    app.app_context().push()
+
+    # Initialize DB
+    db.create_all()
+
     return app
 

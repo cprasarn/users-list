@@ -1,6 +1,7 @@
 import os
-basedir = os.path.abspath(os.path.dirname(__file__))
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+project_dir = os.path.dirname(os.path.abspath(__file__)) + '/data/'
 
 class Config(object):
     DEBUG = False
@@ -11,20 +12,24 @@ class Config(object):
 
 class ProductionConfig(Config):
     DEBUG = False
+    SQLALCHEMY_DATABASE_URI = "sqlite:///{}".format(os.path.join(project_dir, "people.db"))
 
 
 class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///{}".format(os.path.join(project_dir, "staging.db"))
 
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///{}".format(os.path.join(project_dir, "dev.db"))
 
 
 class TestingConfig(Config):
     TESTING = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///{}".format(os.path.join(project_dir, "test.db"))
 
 
 config = {
