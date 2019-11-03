@@ -8,6 +8,7 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = '1f8b9d86-3a98-4369-8be5-944522861c96'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class ProductionConfig(Config):
@@ -33,7 +34,7 @@ class TestingConfig(Config):
 
 
 config = {
-    'dev': DevelopmentConfig,
+    'development': DevelopmentConfig,
     'production': ProductionConfig,
-    'test': TestingConfig
+    'testing': TestingConfig
 }

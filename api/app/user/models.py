@@ -2,10 +2,9 @@ import datetime
 
 from app import db
 
-from app.utils.serializer import Serializer
 from app.utils.uuid import generateUUID
 
-class User(db.Model, Serializer):
+class User(db.Model):
     __tablename__ = 'users'
     __public__ = ['id', 'firstname', 'lastname', 'email', 'age', 'gender']
 

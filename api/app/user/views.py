@@ -5,7 +5,10 @@ from sqlalchemy import or_
 from . import user
 from app import db
 from app.user.models import User
+from app.user.schema import UserSchema
 
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 
 @user.route('/users', methods=['POST'])
 def add_user():
@@ -77,7 +80,7 @@ def list_user():
         message = {'message': 'Something went wrong'}
         return jsonify(message), 500
     else:
-        return jsonify(User.to_serializable_list(data)), 200
+        return users_schema.jsonify(data)
 
 
 @user.route('/users/<user_id>', methods=['GET'])
@@ -90,7 +93,7 @@ def show_user(user_id):
         message = {'message': 'Cannot get user ID {}'.format(user_id)}
         return jsonify(message), 500
     else:
-        return jsonify(data.to_serializable_dict()), 200
+        return user_schema.jsonify(data)
 
 
 @user.route('/users/<user_id>', methods=['PUT'])
@@ -123,7 +126,7 @@ def update_user(user_id):
         message = {'message': 'Something went wrong'}
         return jsonify(message), 500
     else:
-        return jsonify(data.to_serializable_dict()), 200
+        return user_schema.jsonify(data)
 
 
 @user.route('/users/<user_id>', methods=['DELETE'])
@@ -140,4 +143,3 @@ def remove_user(user_id):
     else:
         message = {'message': 'User ID {} was removed'.format(user_id)}
         return jsonify(message), 200
-
