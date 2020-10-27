@@ -2,7 +2,7 @@ aniso8601==3.0.2
 asn1crypto==0.24.0
 cffi==1.11.5
 Click==7.0
-cryptography==2.4.2
+cryptography==3.2
 Flask==1.0.2
 Flask-Cors==3.0.6
 flask-marshmallow==0.10.1
